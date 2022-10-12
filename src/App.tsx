@@ -24,7 +24,7 @@ import { notify_backend_backend } from '../declarations/notify_backend_backend';
 import { greet_dapp } from '../declarations/greet_dapp';
 import Input from './components/Input';
 import CustomButton from './components/CustomButton';
-
+import 'react-native-polyfill-globals/auto';
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -54,7 +54,7 @@ const App = () => {
       console.log('this is greeting:', greeting);
       // setResult(greeting);
     } catch (error) {
-      console.error('this is error', error);
+      console.error(error);
     }
   };
   return (
@@ -99,7 +99,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'grey',
+    backgroundColor: 'silver',
     flexGrow: 1,
   },
   header: {

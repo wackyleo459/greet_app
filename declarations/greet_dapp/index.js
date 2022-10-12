@@ -4,15 +4,16 @@ import { blsVerify } from '@dfinity/bls-verify';
 import { idlFactory } from './greet_dapp.did.js';
 export { idlFactory } from './greet_dapp.did.js';
 // CANISTER_ID is replaced by webpack based on node environment
-export const canisterId = process.env.GREET_DAPP_CANISTER_ID;
+export const canisterId = 'rno2w-sqaaa-aaaaa-aaacq-cai';
 
 /**
- * 
+ *
  * @param {string | import("@dfinity/principal").Principal} canisterId Canister ID of Agent
  * @param {{agentOptions?: import("@dfinity/agent").HttpAgentOptions; actorOptions?: import("@dfinity/agent").ActorConfig}} [options]
  * @return {import("@dfinity/agent").ActorSubclass<import("./greet_dapp.did.js")._SERVICE>}
  */
 export const createActor = (canisterId, options) => {
+  console.log('this is canisterId', process.env.GREET_DAPP_CANISTER_ID);
   const agent = new HttpAgent(
     options
       ? {...options.agentOptions, host: 'http://localhost:8000'}
