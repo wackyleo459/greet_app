@@ -14,12 +14,9 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import { AuthClient } from '@dfinity/auth-client';
-import { blsVerify, Actor } from '@dfinity/agent';
 import { notify_backend_backend } from '../declarations/notify_backend_backend';
 import { greet_dapp } from '../declarations/greet_dapp';
 import Input from './components/Input';
@@ -40,23 +37,36 @@ const Section: React.FC<
 };
 
 const App = () => {
-
+  const [showText, setShowText] = React.useState(true);
   const [value, setValue] = React.useState('');
-  const [result, setResult] = React.useState('');
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
-  const [authClient, setAuthClient] = React.useState(null);
-  const [actor, setActor] = React.useState(null);
+  const [result, setResult] = React.useState('I');
+  const [blink, setBlink] = React.useState(true);
 
   const greetName = async (input: string) => {
+    setResult('I');
+    setBlink(true);
     //Interact with foo actor, calling the greet method
     try {
       const greeting = await greet_dapp.greet(input);
-      console.log('this is greeting:', greeting);
-      // setResult(greeting);
+      setResult(greeting);
+      setBlink(false);
+      setShowText(true);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    // blink effect
+    const interval = setInterval(() => {
+      setShowText((text: Boolean) => !text);
+    }, 300);
+    if (!blink) {
+      return clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [blink]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor={'beige'} />
@@ -82,7 +92,14 @@ const App = () => {
           </View>
           <Text style={{fontSize: 14, paddingLeft: 33, fontWeight: 'bold', marginTop: 10}}>Response</Text>
           <View style={styles.sectionResponse}>
-            <Text style={{textAlign: 'center', color: 'yellow'}}>{result}</Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'yellow',
+                display: showText ? 'flex' : 'none',
+              }}>
+              {result}
+            </Text>
           </View>
           <Section title="Sign Up">
             <Text style={styles.highlight}>New</Text> user? Go to Sign Up.
@@ -139,6 +156,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 10,
     marginHorizontal: 30,
+    minHeight: 70,
     display: 'flex',
     textAlign: 'center',
     justifyContent: 'center',
