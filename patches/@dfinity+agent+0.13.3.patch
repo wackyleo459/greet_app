@@ -1,0 +1,62 @@
+diff --git a/node_modules/@dfinity/agent/lib/cjs/agent/http/index.js b/node_modules/@dfinity/agent/lib/cjs/agent/http/index.js
+index 50dc70f..ec7a179 100644
+--- a/node_modules/@dfinity/agent/lib/cjs/agent/http/index.js
++++ b/node_modules/@dfinity/agent/lib/cjs/agent/http/index.js
+@@ -211,7 +211,7 @@ class HttpAgent {
+         // Run both in parallel. The fetch is quite expensive, so we have plenty of time to
+         // calculate the requestId locally.
+         const [response, requestId] = await Promise.all([
+-            this._fetch('' + new URL(`/api/v2/canister/${ecid.toText()}/call`, this._host), Object.assign(Object.assign({}, transformedRequest.request), { body })),
++            this._fetch('' + new URL(`/api/v2/canister/${ecid.toText()}/call`, this._host), Object.assign(Object.assign({reactNative: {textStreaming: true}}, transformedRequest.request), { body })),
+             (0, request_id_1.requestIdOf)(submit),
+         ]);
+         if (!response.ok) {
+@@ -294,7 +294,7 @@ class HttpAgent {
+         const canister = typeof canisterId === 'string' ? principal_1.Principal.fromText(canisterId) : canisterId;
+         const transformedRequest = request !== null && request !== void 0 ? request : (await this.createReadStateRequest(fields, identity));
+         const body = cbor.encode(transformedRequest.body);
+-        const response = await this._fetch('' + new URL(`/api/v2/canister/${canister}/read_state`, this._host), Object.assign(Object.assign({}, transformedRequest.request), { body }));
++        const response = await this._fetch('' + new URL(`/api/v2/canister/${canister}/read_state`, this._host), Object.assign(Object.assign({reactNative: { __nativeResponseType: "base64" }}, transformedRequest.request), { body }));
+         if (!response.ok) {
+             throw new Error(`Server returned an error:\n` +
+                 `  Code: ${response.status} (${response.statusText})\n` +
+@@ -334,7 +334,7 @@ class HttpAgent {
+                 Authorization: 'Basic ' + btoa(this._credentials),
+             }
+             : {};
+-        const response = await this._fetch('' + new URL(`/api/v2/status`, this._host), { headers });
++        const response = await this._fetch('' + new URL(`/api/v2/status`, this._host), Object.assign({ reactNative: { __nativeResponseType: "base64" } }, { headers }));
+         if (!response.ok) {
+             throw new Error(`Server returned an error:\n` +
+                 `  Code: ${response.status} (${response.statusText})\n` +
+diff --git a/node_modules/@dfinity/agent/lib/esm/agent/http/index.js b/node_modules/@dfinity/agent/lib/esm/agent/http/index.js
+index 85074b1..3fb645c 100644
+--- a/node_modules/@dfinity/agent/lib/esm/agent/http/index.js
++++ b/node_modules/@dfinity/agent/lib/esm/agent/http/index.js
+@@ -180,7 +180,7 @@ export class HttpAgent {
+         // Run both in parallel. The fetch is quite expensive, so we have plenty of time to
+         // calculate the requestId locally.
+         const [response, requestId] = await Promise.all([
+-            this._fetch('' + new URL(`/api/v2/canister/${ecid.toText()}/call`, this._host), Object.assign(Object.assign({}, transformedRequest.request), { body })),
++            this._fetch('' + new URL(`/api/v2/canister/${ecid.toText()}/call`, this._host), Object.assign(Object.assign({reactNative: {textStreaming: true}}, transformedRequest.request), { body })),
+             requestIdOf(submit),
+         ]);
+         if (!response.ok) {
+@@ -263,7 +263,7 @@ export class HttpAgent {
+         const canister = typeof canisterId === 'string' ? Principal.fromText(canisterId) : canisterId;
+         const transformedRequest = request !== null && request !== void 0 ? request : (await this.createReadStateRequest(fields, identity));
+         const body = cbor.encode(transformedRequest.body);
+-        const response = await this._fetch('' + new URL(`/api/v2/canister/${canister}/read_state`, this._host), Object.assign(Object.assign({}, transformedRequest.request), { body }));
++        const response = await this._fetch('' + new URL(`/api/v2/canister/${canister}/read_state`, this._host), Object.assign(Object.assign({reactNative: { __nativeResponseType: "base64" }}, transformedRequest.request), { body }));
+         if (!response.ok) {
+             throw new Error(`Server returned an error:\n` +
+                 `  Code: ${response.status} (${response.statusText})\n` +
+@@ -303,7 +303,7 @@ export class HttpAgent {
+                 Authorization: 'Basic ' + btoa(this._credentials),
+             }
+             : {};
+-        const response = await this._fetch('' + new URL(`/api/v2/status`, this._host), { headers });
++        const response = await this._fetch('' + new URL(`/api/v2/status`, Object.assign({ reactNative: { __nativeResponseType: "base64" } }, { headers })), { headers });
+         if (!response.ok) {
+             throw new Error(`Server returned an error:\n` +
+                 `  Code: ${response.status} (${response.statusText})\n` +

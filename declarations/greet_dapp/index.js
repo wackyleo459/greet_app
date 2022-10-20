@@ -13,7 +13,6 @@ export const canisterId = 'rrkah-fqaaa-aaaaa-aaaaq-cai';
  * @return {import("@dfinity/agent").ActorSubclass<import("./greet_dapp.did.js")._SERVICE>}
  */
 export const createActor = (canisterId, options) => {
-  console.log('this is canisterId', process.env.GREET_DAPP_CANISTER_ID);
   const agent = new HttpAgent(
     options
       ? {...options.agentOptions, host: 'http://localhost:8000'}
