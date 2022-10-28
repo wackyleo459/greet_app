@@ -4,7 +4,7 @@ import { blsVerify } from '@dfinity/bls-verify';
 import { idlFactory } from './greet_dapp.did.js';
 export { idlFactory } from './greet_dapp.did.js';
 // CANISTER_ID is replaced by webpack based on node environment
-export const canisterId = 'rrkah-fqaaa-aaaaa-aaaaq-cai';
+export const canisterID = "rrkah-fqaaa-aaaaa-aaaaq-cai";
 
 /**
  *
@@ -15,12 +15,14 @@ export const canisterId = 'rrkah-fqaaa-aaaaa-aaaaq-cai';
 export const createActor = (canisterId, options) => {
   const agent = new HttpAgent(
     options
-      ? {...options.agentOptions, host: 'http://localhost:8000'}
+      ? {...options.agentOptions}
       : {
           // Identity,
-          host: 'http://localhost:8000/',
+          host: "http://localhost:8000/",
         },
   );
+  console.log("my NODE_ENV", process.env.NODE_ENV);
+  console.log("created agent", agent);
 
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== "production") {
@@ -42,8 +44,18 @@ export const createActor = (canisterId, options) => {
  * A ready-to-use agent for the greet_dapp canister
  * @type {import("@dfinity/agent").ActorSubclass<import("./greet_dapp.did.js")._SERVICE>}
  */
-export const greet_dapp = createActor(canisterId, {
-  // actorOptions: {
-  //   blsVerify,
-  // },
+export const greet_dapp = createActor(canisterID, {
+  agentOptions: {
+    fetchOptions: {
+      reactNative: {
+        __nativeResponseType: "base64",
+      },
+    },
+    callOptions: {
+      reactNative: {
+        textStreaming: true,
+      },
+    },
+    host: "http://localhost:8000",
+  },
 });

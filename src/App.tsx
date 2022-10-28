@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -7,7 +8,7 @@
  *
  * @format
  */
-import React, { startTransition, useEffect, type PropsWithChildren } from 'react';
+import React, {startTransition, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,26 +16,14 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native';
 
-import { notify_backend_backend } from '../declarations/notify_backend_backend';
-import { greet_dapp } from '../declarations/greet_dapp';
+import {notify_backend_backend} from '../declarations/notify_backend_backend';
+import {greet_dapp} from '../declarations/greet_dapp';
 import Input from './components/Input';
 import CustomButton from './components/CustomButton';
 import 'react-native-polyfill-globals/auto';
-
-const Section: React.FC<
-  PropsWithChildren<{
-    title: string;
-  }>
-> = ({children, title}) => {
-  return (
-    <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      <Text style={styles.sectionDescription}>{children}</Text>
-    </View>
-  );
-};
 
 const App = () => {
   const [showText, setShowText] = React.useState(true);
@@ -68,10 +57,24 @@ const App = () => {
   }, [blink]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle="dark-content" backgroundColor={'beige'} />
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexDirection: 'row',
+              padding: 10,
+            }}>
+            <Image
+              source={require('./assets/icon-192x192.png')}
+              style={{width: 60, height: 60}}
+            />
+            <Text>Build for the IC</Text>
+          </View>
           <View style={styles.header}>
             <Text style={styles.headerText}>Greet App</Text>
           </View>
@@ -88,9 +91,17 @@ const App = () => {
                 e.preventDefault();
                 greetName(value);
               }}
-              />
+            />
           </View>
-          <Text style={{fontSize: 14, paddingLeft: 33, fontWeight: 'bold', marginTop: 10}}>Response</Text>
+          <Text
+            style={{
+              fontSize: 14,
+              paddingLeft: 33,
+              fontWeight: 'bold',
+              marginTop: 10,
+            }}>
+            Response
+          </Text>
           <View style={styles.sectionResponse}>
             <Text
               style={{
@@ -101,13 +112,6 @@ const App = () => {
               {result}
             </Text>
           </View>
-          <Section title="Sign Up">
-            <Text style={styles.highlight}>New</Text> user? Go to Sign Up.
-          </Section>
-          <Section title="Login">Login with your username.</Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -125,7 +129,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
   },
   greetForm: {
