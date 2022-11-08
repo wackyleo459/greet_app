@@ -1,8 +1,8 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
-import { blsVerify } from '@dfinity/bls-verify';
+import { blsVerify } from "@dfinity/bls-verify";
 // Imports and re-exports candid interface
-import { idlFactory } from './greet_dapp.did.js';
-export { idlFactory } from './greet_dapp.did.js';
+import { idlFactory } from "./greet_dapp.did.js";
+export { idlFactory } from "./greet_dapp.did.js";
 // CANISTER_ID is replaced by webpack based on node environment
 export const canisterID = "rrkah-fqaaa-aaaaa-aaaaq-cai";
 
@@ -15,7 +15,7 @@ export const canisterID = "rrkah-fqaaa-aaaaa-aaaaq-cai";
 export const createActor = (canisterId, options) => {
   const agent = new HttpAgent(
     options
-      ? {...options.agentOptions}
+      ? { ...options.agentOptions }
       : {
           // Identity,
           host: "http://localhost:8000/",
@@ -39,7 +39,7 @@ export const createActor = (canisterId, options) => {
     ...(options ? options.actorOptions : {}),
   });
 };
-  
+
 /**
  * A ready-to-use agent for the greet_dapp canister
  * @type {import("@dfinity/agent").ActorSubclass<import("./greet_dapp.did.js")._SERVICE>}
