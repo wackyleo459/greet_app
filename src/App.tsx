@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
@@ -8,7 +9,7 @@
  *
  * @format
  */
-import React, {startTransition, useEffect} from 'react';
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -17,22 +18,23 @@ import {
   Text,
   View,
   Image,
-} from 'react-native';
+  Linking,
+} from "react-native";
 
-import {notify_backend_backend} from '../declarations/notify_backend_backend';
-import {greet_dapp} from '../declarations/greet_dapp';
-import Input from './components/Input';
-import CustomButton from './components/CustomButton';
-import 'react-native-polyfill-globals/auto';
+import { greet_dapp } from "../declarations/greet_dapp";
+import Input from "./components/Input";
+import CustomButton from "./components/CustomButton";
+import "react-native-polyfill-globals/auto";
+//import Config from "react-native-config";
 
 const App = () => {
   const [showText, setShowText] = React.useState(true);
-  const [value, setValue] = React.useState('');
-  const [result, setResult] = React.useState('I');
+  const [value, setValue] = React.useState("");
+  const [result, setResult] = React.useState("I");
   const [blink, setBlink] = React.useState(true);
 
   const greetName = async (input: string) => {
-    setResult('I');
+    setResult("I");
     setBlink(true);
     //Interact with foo actor, calling the greet method
     try {
@@ -82,10 +84,10 @@ const App = () => {
             <Input
               placeholder={'Enter your name here'}
               onChange={text => setValue(text)}
-              title={'Name'}
+              title={'Enter your Name'}
             />
             <CustomButton
-              width={200}
+              width={180} color='#4b68c9'
               title="Submit"
               onPress={e => {
                 e.preventDefault();
@@ -93,24 +95,44 @@ const App = () => {
               }}
             />
           </View>
-          <Text
-            style={{
-              fontSize: 14,
-              paddingLeft: 33,
-              fontWeight: 'bold',
-              marginTop: 10,
-            }}>
-            Response
-          </Text>
-          <View style={styles.sectionResponse}>
+          <View style={{padding: 10}}>
             <Text
               style={{
-                textAlign: 'center',
-                color: 'yellow',
-                display: showText ? 'flex' : 'none',
+                fontSize: 14,
+                paddingLeft: 20,
+                fontWeight: 'bold',
+                marginTop: 15,
               }}>
-              {result}
+              Response
             </Text>
+            <View style={styles.sectionResponse}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'yellow',
+                  display: showText ? 'flex' : 'none',
+                }}>
+                {result}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.bottom}>
+            <Text
+              style={{
+                fontSize: 14,
+                marginBottom: 10,
+                textAlign: 'center',
+              }}>
+              Interested to explore the Internet Computer?
+            </Text>
+            <CustomButton
+              width={120} color='#634cb5' fontSize={14}
+              title="Learn more"
+              onPress={e => {
+                e.preventDefault();
+                Linking.openURL("https://smartcontracts.org/");
+              }}
+            />
           </View>
         </View>
       </ScrollView>
@@ -120,7 +142,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'silver',
     flexGrow: 1,
   },
   header: {
@@ -130,12 +151,13 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: 'center',
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   greetForm: {
-    backgroundColor: 'white',
+    backgroundColor: '#cad1ed',
     borderRadius: 20,
-    padding: 10,
+    padding: 20,
+    paddingTop: 30,
     margin: 20,
   },
   sectionContainer: {
@@ -157,9 +179,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   sectionResponse: {
-    padding: 20,
     marginTop: 10,
-    marginHorizontal: 30,
+    marginHorizontal: 20,
     minHeight: 70,
     display: 'flex',
     textAlign: 'center',
@@ -167,6 +188,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 10,
   },
+  bottom: {
+    flexGrow: 2,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    paddingBottom: 10,
+  }
 });
 
 export default App;
